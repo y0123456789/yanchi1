@@ -22,7 +22,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests datetime urllib3 jinja2
+        pip install requests datetime timedelta jinja2
         pip install -r requirements.txt
 
     - name: Run yanchi.py
