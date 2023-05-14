@@ -34,10 +34,6 @@ jobs:
         git config --global user.name "y0123456789"
         git add .
         git commit -m "Add generated files"
-    - name: Push changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
