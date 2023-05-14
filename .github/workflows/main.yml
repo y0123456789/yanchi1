@@ -28,6 +28,16 @@ jobs:
         pip install -r requirements.txt
     - name: Run yanchi.py
       run: python yanchi.py
+    - name: Commit files
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+        git add .
+        git commit -m "Add generated files"
+    - name: Push changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
