@@ -1,26 +1,30 @@
 name: Run yanchi.py
 
 on:
-  schedule:
-    - cron: '*/40 * * * *'
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+
 jobs:
   build:
-    name: Build
+
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v2
       with:
         python-version: '3.x'
 
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
-        python3 -u yanchi.py
+        pip install requests datetime urllib3 jinja2
+
+    - name: Run yanchi.py
+      run: python yanchi.py
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.1
