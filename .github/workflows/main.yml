@@ -34,16 +34,18 @@ jobs:
         git config --global user.name "y0123456789"
         git add .
         git commit -m "Add generated files"
+    - name: Pull latest changes
+      run: git pull
     - name: Push changes
       uses: ad-m/github-push-action@v0.6.0
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          path: deploy
+          path: .
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
           branch: gh-pages
-          folder: deploy
+          folder: .
           git-config-name: "y0123456789"
           git-config-email: "52168408+y0123456789@users.noreply.github.com"
