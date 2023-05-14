@@ -40,12 +40,12 @@ jobs:
       uses: ad-m/github-push-action@v0.6.0
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
+          branch: down
           path: .
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
-          branch: master
+          branch: down
           folder: .
           git-config-name: "y0123456789"
           git-config-email: "52168408+y0123456789@users.noreply.github.com"
