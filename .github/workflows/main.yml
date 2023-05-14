@@ -51,3 +51,13 @@ jobs:
           folder: .
           git-config-name: "y0123456789"
           git-config-email: "52168408+y0123456789@users.noreply.github.com"
+    - name: Force push branch
+      if: github.ref == 'refs/heads/main'
+      uses: actions/checkout@v2
+      with:
+        ref: down
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+        git reset --hard origin/down
+        git push --force
