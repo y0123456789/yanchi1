@@ -6,8 +6,6 @@ on:
     - cron: '*/40 * * * *'
     - cron: '0 0 * * *'
   workflow_dispatch:
-permissions:
-  contents: write
 jobs:
   build:
 
@@ -30,7 +28,7 @@ jobs:
     - name: Run yanchi.py
       run: python yanchi.py
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      uses: JamesIves/github-pages-deploy-action@v4.1.1
       with:
           branch: gh-pages
           folder: deploy
