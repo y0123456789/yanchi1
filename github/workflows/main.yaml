@@ -1,32 +1,27 @@
-name: Python application
+name: Run yanchi.py
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
-      
+        python-version: '3.x'
+
     - name: Install dependencies
       run: |
-        pip install requests
-        pip install json
-        pip install datetime
-        pip install timedelta
-        pip install jinja2
-      
-    - name: Run Python script
-      run: python yanchi.py
+        pip install requests json datetime timedelta jinja2
 
+    - name: Run yanchi.py
+      run: python yanchi.py
