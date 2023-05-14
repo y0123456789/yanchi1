@@ -21,8 +21,11 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: |
-        pip install requests json datetime urllib3 jinja2
+        run: |
+        pip install requests urllib3 jinja2
+        python3 -m pip install --upgrade pip
+        pip install --upgrade setuptools
+        pip install datetime
         python3 -u yanchi.py
 
     - name: Deploy
