@@ -10,6 +10,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Update JSON and Mobileconfig files
       run: |
+        python3 -u yanchi.js
         # 在此处编写您的脚本以自动更新JSON和Mobileconfig文件
     - name: Commit and push changes
       uses: stefanzweifel/git-auto-commit-action@v4
