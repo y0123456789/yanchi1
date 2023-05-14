@@ -1,19 +1,32 @@
-name: Auto-update JSON and Mobileconfig files
+name: Python application
+
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
+    - name: Checkout code
       uses: actions/checkout@v2
-    - name: Update JSON and Mobileconfig files
-      run: |
-        python3 -u yanchi.js
-        # 在此处编写您的脚本以自动更新JSON和Mobileconfig文件
-    - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        commit_message: Update JSON and Mobileconfig files
-        commit_options: '--no-verify'
+        python-version: 3.9
+      
+    - name: Install dependencies
+      run: |
+        pip install requests
+        pip install json
+        pip install datetime
+        pip install timedelta
+        pip install jinja2
+      
+    - name: Run Python script
+      run: python yanchi.py
+
