@@ -1,24 +1,41 @@
 import json
 import requests
-from io import BytesIO
-from jinja2 import Template
-from lxml import etree
-from base64 import b64encode
+from datetime import datetime, timezone
+from urllib.parse import urlparse
+import os
 
-# 获取 JSON 文件
-json_url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
-response = requests.get(json_url).text
-data = json.loads(response)
 
-# 获取模板文件
+# 获取json文件
+url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
+response = requests.get(url).json()
+
+# 获取mobileconfig模板文件
 template_url = "https://dhinakg.github.io/check-pallas/template.mobileconfig"
-response = requests.get(template_url).text
-template = Template(response)
+template = requests.get(template_url).text
 
-# 填充模板并生成配置文件
-xml_content = template.render(data=data)
-xml_tree = etree.fromstring(xml_content.encode())
-xml_string = etree.tostring(xml_tree, pretty_print=True)
+# 循环修改模板文件并保存mobileconfig文件
+for minor_version in response["minorVersions"]:
+    # 获取天数差
+    if minor_version["date"]:
+        delta = datetime.now(timezone.utc) - datetime.fromisoformat(minor_version["date"].replace("Z", "+00:00"))
+        days = delta.days
+    else:
+        days = 0
 
-# 保存为 mobileconfig 格式的文件
-filename = f"{data['minor_version']['name']} —剩余{
+    # 修改mobileconfig文件
+    mobileconfig = template.replace("{DELAYPERIOD}", str(minor_version["delay"]))
+
+    # 保存mobileconfig文件
+    filename = f"{minor_version['name']} —剩余{days}天.mobileconfig"
+    with open(filename, "w") as f:
+        f.write(mobileconfig)
+
+    # 添加mobileconfig文件的url到json文件中
+    url = urlparse(template_url)._replace(path=filename).geturl()
+    minor_version["url"] = url
+
+# 保存修改后的json文件
+with open("yanchi.json", "w") as f:
+    json.dump(response, f)
+
+print("生成yanchi.json文件成功！")
