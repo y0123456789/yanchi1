@@ -1,9 +1,8 @@
 name: Run yanchi.py
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 * * * *"
 
 jobs:
   build:
@@ -21,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests json datetime timedelta jinja2
+        pip install requests json datetime urllib3 jinja2
 
     - name: Run yanchi.py
       run: python yanchi.py
