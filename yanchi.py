@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 from urllib.parse import urlparse
 import os
 
-
 # 获取json文件
 url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
 response = requests.get(url).json()
