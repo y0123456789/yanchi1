@@ -4,10 +4,39 @@ from datetime import datetime, timezone
 from urllib.parse import urlparse
 import os
 
+
 # 获取json文件
 url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
 response = requests.get(url).json()
+# 删除指定的键值对
+if "iOS (iPhone 14 series)" in response:
+    response.pop("iOS (iPhone 14 series)")
+if "iPadOS (October 2022 models)" in response:
+    response.pop("iPadOS (October 2022 models)")
+if "_date" in response:
+    response.pop("_date")
+if "iOS (all other devices supporting iOS 16)" in response:
+    response["iOS (iPhone 8 - iPhone 14)"] = response.pop("iOS (all other devices supporting iOS 16)")
+if "iOS Legacy v2 (device supporting up to iOS 15)" in response:
+    response["iOS (iPhone 6s - iPhone 7)"] = response.pop("iOS Legacy v2 (device supporting up to iOS 15)")
+if "iPadOS" in response:
+    response["iPadOS (最高iPadOS 16)"] = response.pop("iPadOS")
+if "iPadOS Legacy v2 (devices supporting up to iOS 15)" in response:
+    response["iPadOS (最高iPadOS 15)"] = response.pop("iPadOS Legacy v2 (devices supporting up to iOS 15)")
+if "macOS" in response:
+    response["macOS"] = response.pop("macOS")
+if "tvOS" in response:
+    response["tvOS"] = response.pop("tvOS")
 
+# 删除delay值为0和小于0的数据
+for name, versions in response.items():
+    for version in versions[:]:
+        if isinstance(version, dict) and "delay" in version and version["delay"] <= 0:
+            versions.remove(version)
+# 如果数据为空，则删除对应的键值对
+for name, versions in list(response.items()):
+    if not versions:
+        del response[name]
 # 获取mobileconfig模板文件
 template_url = "https://raw.githubusercontent.com/y0123456789/yanchi/main/template.mobileconfig"
 template = requests.get(template_url).text
