@@ -1,12 +1,12 @@
 name: Run yanchi.py
 
 on:
-  schedule:
-    - cron: "0 * * * *"
+  push:
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,8 +20,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests json datetime urllib3 jinja2
+        pip install requests datetime urllib3 jinja2
+        pip install -r requirements.txt
 
     - name: Run yanchi.py
       run: python yanchi.py
+
 
