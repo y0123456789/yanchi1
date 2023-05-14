@@ -1,36 +1,31 @@
-name: Run yanchi.py
+name: Python application
+
 on:
   push:
-  schedule:
-    - cron: '*/40 * * * *'
-    - cron: '0 0 * * *'
-  workflow_dispatch:
-permissions:
-  contents: write
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
+    - uses: actions/checkout@v2
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
-
+        python-version: '3.9'
     - name: Install dependencies
       run: |
-        pip install requests datetime timedelta jinja2
+        python -m pip install --upgrade pip
+        echo 'requests' >> requirements.txt
+        echo 'json' >> requirements.txt
+        echo 'datetime' >> requirements.txt
+        echo 'timedelta' >> requirements.txt
+        echo 'jinja2' >> requirements.txt
         pip install -r requirements.txt
-
     - name: Run yanchi.py
       run: python yanchi.py
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
-      with:
-          branch: gh-pages
-          folder: deploy
-
 
