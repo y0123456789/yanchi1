@@ -1,11 +1,12 @@
 name: Python application
-
 on:
   push:
   schedule:
     - cron: '*/40 * * * *'
     - cron: '0 0 * * *'
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
 
@@ -27,8 +28,8 @@ jobs:
         pip install -r requirements.txt
     - name: Run yanchi.py
       run: python yanchi.py
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.1
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
           branch: gh-pages
           folder: deploy
