@@ -26,16 +26,16 @@ for minor_version in response["minorVersions"]:
     mobileconfig = template.replace("{DELAYPERIOD}", str(minor_version["delay"]))
 
     # 保存mobileconfig文件
-    filename = f"{minor_version['name']} —剩余{days}天.mobileconfig"
-    with open(filename, "w") as f:
-        f.write(mobileconfig)
+   filename = "/path/to/" + f"{minor_version['name']} —剩余{days}天.mobileconfig"
+   with open(filename, "w") as f:
+    f.write(mobileconfig)
 
     # 添加mobileconfig文件的url到json文件中
     url = urlparse(template_url)._replace(path=filename).geturl()
     minor_version["url"] = url
 
 # 保存修改后的json文件
-with open("yanchi.json", "w") as f:
+with open("/path/to/yanchi.json", "w") as f:
     json.dump(response, f)
 
 print("生成yanchi.json文件成功！")
