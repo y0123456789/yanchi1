@@ -15,12 +15,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Clear Branch
-      run: |
-        git checkout dwon
-        git rm -rf .
-        git commit -am "Clear branch"
-        git push origin dwon
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
