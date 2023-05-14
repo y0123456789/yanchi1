@@ -28,7 +28,7 @@ jobs:
       run: python yanchi.py
 
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.1
+      uses: JamesIves/github-pages-deploy-action@4.4.1
       with:
           branch: gh-pages
           folder: deploy
