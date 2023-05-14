@@ -10,7 +10,7 @@ url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
 response = requests.get(url).json()
 
 # 获取mobileconfig模板文件
-template_url = "https://dhinakg.github.io/check-pallas/template.mobileconfig"
+template_url = "https://github.com/y0123456789/yanchi/blob/main/template.mobileconfig"
 template = requests.get(template_url).text
 
 # 循环修改模板文件并保存mobileconfig文件
