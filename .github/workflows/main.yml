@@ -27,9 +27,10 @@ jobs:
         pip install -r requirements.txt
     - name: Run yanchi.py
       run: python yanchi.py
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4.1.1
-      with:
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
           branch: gh-pages
           folder: deploy
-
+#           git-config-name: GitHub Actions
+#           git-config-email: github-actions[bot]@users.noreply.github.com
