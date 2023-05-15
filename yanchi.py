@@ -32,7 +32,7 @@ with open('date.json', 'w') as f:
 
     
 # 从 JSON 数据中获取时间字符串
-time_str = response["date"]
+time_str = response.items["date"]
 # 将时间字符串转换为 datetime 对象
 dt = datetime.fromisoformat(time_str)
 # 设置 UTC 时区
