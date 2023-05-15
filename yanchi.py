@@ -77,5 +77,23 @@ for name, versions in response.items():
        f.write(json.dumps(response))
     #with Path("yanchi.json").open("w") as f:
          #json.dump(response, f)
+        
+    # 读取原始数据
+    with open("yanchi.json", "r") as file:
+       original_data = json.load(file)
+
+    converted_data = []
+
+    # 遍历原始数据，将每个类型与对应的数组转换为新的字典格式
+    for type, array in original_data.items():
+        converted_dict = {
+        "type": type,
+        "list": array
+       }
+       converted_data.append(converted_dict)
+
+  # 将转换后的数据写入新的文件
+   with open("yanchilist.json", "w") as file:
+       json.dump(converted_data, file)
 
 print("生成yanchi.json文件成功！")
