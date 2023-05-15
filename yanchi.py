@@ -82,8 +82,6 @@ for name, versions in response.items():
     with open("yanchi.json", "r") as file:
        original_data = json.load(file)
 
-    converted_data = []
-
     # 遍历原始数据，将每个类型与对应的数组转换为新的字典格式
     for type, array in original_data.items():
         converted_dict = {
