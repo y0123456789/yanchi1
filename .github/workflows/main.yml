@@ -40,6 +40,7 @@ jobs:
           echo 'urllib3' >> requirements.txt
           echo 'jinja2' >> requirements.txt
           pip install -r requirements.txt
+          pip3 install hammock python-dateutil packaging urllib3
       
       # 第四个步骤：刷新代码库中的内容
       - name: Run yanchi.py
