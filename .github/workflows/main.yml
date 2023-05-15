@@ -9,9 +9,10 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
-# 定义访问权限，这里表示需要访问仓库的 contents 权限
+# 定义访问权限，这里表示需要访问仓库的 contents 和 deployments 权限
 permissions:
   contents: write
+  deployments: write
 
 # 定义一个 job，job 的名称为 Build
 jobs:
@@ -46,24 +47,32 @@ jobs:
       - name: Run yanchi.py
         run: |
           python3 -u yanchi.py
-
-      # 第五个步骤：将生成的文件上传到仓库的 gh-pages 分支
-      - name: Deploy to gh-pages
-        run: |
-          mkdir -p deploy
-          mv deploy/yanchi.json
-          mv **/*.mobileconfig deploy/
-          cp deploy/* $GITHUB_WORKSPACE/
+          
+       # 第五个步骤：创建 deploy 文件夹
+      - name: Create Deploy Folder
+        run: mkdir -p deploy
       
-      # 第六个步骤：配置 git
+      # 第六个步骤：将生成的文件移动到 deploy 文件夹
+      - name: Move Files to Deploy Folder
+        run: |
+          mv yanchi.json deploy/
+          mv *.mobileconfig deploy/
+      
+      # 第七个步骤：将生成的文件复制回工作目录
+      - name: Copy Files to Workspace
+        run: cp -R deploy/* $GITHUB_WORKSPACE/
+      
+      # 第八个步骤：配置 git
       - name: Configure Git
         run: |
           git config --global user.name 'y0123456789'
           git config --global user.email '52168408+y0123456789@users.noreply.github.com'
       
-      # 第七个步骤：提交和推送变更到 gh-pages 分支
+      # 第九个步骤：提交和推送变更到 gh-pages 分支
       - name: Commit and Push Changes
         run: |
           git add .
           git commit -m 'Update files'
           git push origin gh-pages
+
+      
