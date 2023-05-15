@@ -58,8 +58,9 @@ jobs:
       # 第六个步骤：上传文件到仓库
       - name: Upload files to repository
         run: |
-            rm -rf mobileconfig
+            rm -rf *.mobileconfig
             rm -rf yanchi.json
+            continue-on-error: true
       - uses: actions/upload-artifact@v2
         with:
           name: MobileConfig and yanchi.json
