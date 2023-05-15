@@ -104,21 +104,23 @@ for versions in response.values():
     for version in versions:
         # 检查版本对象是否为字典类型，并且包含'date'字段
         if isinstance(version, dict) and version.get('date') is not None:
-           time_str = version['date']
-           # 将时间字符串转换为 datetime 对象
-           dt = datetime.fromisoformat(time_str)
-           # 设置 UTC 时区
-           utc_tz = pytz.timezone('UTC')
-           # 将 datetime 对象转换为 UTC 时间
-           utc_dt = utc_tz.normalize(dt.astimezone(utc_tz))
-           # 设置上海时区
-           sh_tz = pytz.timezone('Asia/Shanghai')
-           # 将 UTC 时间转换为上海时区时间
-           sh_dt = sh_tz.normalize(utc_dt.astimezone(sh_tz))
-           # 格式化输出上海时区时间
-           sh_dt_str = sh_dt.strftime('%Y-%m-%d %H:%M:%S')
-           response["zhdate"] = zhdate
-           print(json.dumps(response, ensure_ascii=False))
+            time_str = version['date']
+            # 将时间字符串转换为 datetime 对象
+            dt = datetime.fromisoformat(time_str)
+            # 设置 UTC 时区
+            utc_tz = pytz.timezone('UTC')
+            # 将 datetime 对象转换为 UTC 时间
+            utc_dt = utc_tz.normalize(dt.astimezone(utc_tz))
+            # 设置上海时区
+            sh_tz = pytz.timezone('Asia/Shanghai')
+            # 将 UTC 时间转换为上海时区时间
+            sh_dt = sh_tz.normalize(utc_dt.astimezone(sh_tz))
+            # 格式化输出上海时区时间
+            sh_dt_str = sh_dt.strftime('%Y-%m-%d %H:%M:%S')
+            # 将转换后的时间赋值给 version 字典的 'zhdate' 键
+            version["zhdate"] = sh_dt_str
+            # 打印转换后的 response 对象
+            print(json.dumps(response, ensure_ascii=False))
 
     # 将字典转换回json字符串并保存到文件中
     with open("yanchi.json", "w") as f:
