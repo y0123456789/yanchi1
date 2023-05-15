@@ -70,7 +70,7 @@ for name, versions in response.items():
             # 将json字符串解析成字典
             # 修改字典中的值
             #url = urlparse(template_url)._replace(path=filename).geturl()
-            url = https://y0123456789.github.io/yanchi1/{version['name']}剩余{days}天.mobileconfig
+            url = f"https://y0123456789.github.io/yanchi1/{version['name']}剩余{days}天.mobileconfig"
             version["url"] = url
 
     # 将字典转换回json字符串并保存到文件中
