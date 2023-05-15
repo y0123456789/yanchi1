@@ -46,14 +46,12 @@ jobs:
       - name: Run yanchi.py
         run: |
           python3 -u yanchi.py
-          mv yanchi.json docs/yanchi.json
-          mv *.mobileconfig docs
 
       # 第五个步骤：使用 JamesIves/github-pages-deploy-action 动作，将生成的文档部署到 gh-pages 分支
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
-          folder: docs
+          folder: .
 #           git-config-name: GitHub Actions
 #           git-config-email: github-actions[bot]@users.noreply.github.com
