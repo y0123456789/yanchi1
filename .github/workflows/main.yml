@@ -1,5 +1,7 @@
+# 指定 GitHub Actions 的名称
 name: Build HTML Docs
 
+# 指定 GitHub Actions 触发的事件，包括 push 事件，定时执行 cron 事件，手动触发 workflow_dispatch 事件
 on:
   push:
   schedule:
@@ -7,22 +9,29 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
+# 定义访问权限，这里表示需要访问仓库的 contents 权限
 permissions:
   contents: write
 
+# 定义一个 job，job 的名称为 Build
 jobs:
   build:
     name: Build
+    # 定义 job 的运行环境为 ubuntu-latest
     runs-on: ubuntu-latest
 
+    # 定义 job 中的各个步骤
     steps:
+      # 第一个步骤：使用 actions/checkout 动作，将代码仓库 checkout 到 action 的工作目录
       - name: Checkout Build Files
         uses: actions/checkout@v2
       
+      # 第二个步骤：使用 actions/setup-python 动作，配置 Python 环境
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
+      # 第三个步骤：安装依赖
       - name: Deps
         run: |
           python -m pip install --upgrade pip
@@ -33,23 +42,12 @@ jobs:
           pip install -r requirements.txt
           pip3 install hammock python-dateutil packaging urllib3
       
+      # 第四个步骤：刷新代码库中的内容
       - name: Run yanchi.py
         run: |
           python3 -u yanchi.py
 
-      - name: Upload files to workflow
-        uses: actions/upload-artifact@v2
-        with:
-          name: MobileConfig and yanchi.json
-          path: |
-            ./mobileconfig
-            ./yanchi.json
-
-      - name: Download files from workflow
-        uses: actions/download-artifact@v2
-        with:
-          name: MobileConfig and yanchi.json
-
+      # 第五个步骤：使用 JamesIves/github-pages-deploy-action 动作，将生成的文档部署到 gh-pages 分支
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
@@ -58,7 +56,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           if-no-branch: create
 
-      - name: Overwrite mobileconfig and yanchi.json
-        run: |
-          cp -f ${{ github.workspace }}/MobileConfig\ and\ yanchi.json/mobileconfig/*.mobileconfig ./mobileconfig/
-          cp -f ${{ github.workspace }}/MobileConfig\ and\ yanchi.json/yanchi.json ./
+      # 第六个步骤：上传文件到仓库
+      - name: Upload files to repository
+        uses: actions/upload-artifact@v2
+        with:
+          name: MobileConfig and yanchi.json
+          path: |
+            ./mobileconfig
+            ./yanchi.json
