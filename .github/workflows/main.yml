@@ -55,12 +55,12 @@ jobs:
       # 第六个步骤：将生成的文件移动到 deploy 文件夹
       - name: Move Files to Deploy Folder
         run: |
-          mv yanchi.json deploy/
-          mv *.mobileconfig deploy/
+          mv yanchi.json 
+          mv *.mobileconfig 
       
       # 第七个步骤：将生成的文件复制回工作目录
       - name: Copy Files to Workspace
-        run: cp -R deploy/* $GITHUB_WORKSPACE/
+        run: cp -R * $GITHUB_WORKSPACE/
       
       # 第八个步骤：配置 git
       - name: Configure Git
