@@ -1,0 +1,55 @@
+name: Python application
+on:
+  push:
+  schedule:
+    - cron: '*/40 * * * *'
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        echo 'requests' >> requirements.txt
+        echo 'datetime' >> requirements.txt
+        echo 'urllib3' >> requirements.txt
+        echo 'jinja2' >> requirements.txt
+        pip install -r requirements.txt
+    - name: Run yanchi.py
+      run: python yanchi.py
+    - name: Commit files
+      run: |
+        git config --global user.email "52168408+y0123456789@users.noreply.github.com"
+        git config --global user.name "y0123456789"
+        git add .
+        git commit -m "Add generated files"
+    - name: Pull latest changes
+      run: git pull
+    - name: Push changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: down
+          path: .
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      with:
+          branch: down
+          folder: .
+          git-config-name: "y0123456789"
+          git-config-email: "52168408+y0123456789@users.noreply.github.com"
+    
+        
