@@ -13,16 +13,18 @@ response = requests.get(url).json()
 
 # 提取更新时间保存为date文件
 #date = response["_date"]
+data = json.load(f)
+    time_str = data["_date"]
 # 将时间字符串转换为 datetime 对象
-dt = datetime.fromisoformat(response["_date"])
+dt = datetime.fromisoformat(time_str)
 # 设置 UTC 时区
 utc_tz = pytz.timezone('UTC')
 # 将 datetime 对象转换为 UTC 时间
-utc_dt = utc_tz.localize(dt)
+utc_dt = utc_tz.normalize(dt.astimezone(utc_tz))
 # 设置上海时区
 sh_tz = pytz.timezone('Asia/Shanghai')
 # 将 UTC 时间转换为上海时区时间
-sh_dt = utc_dt.astimezone(sh_tz)
+sh_dt = sh_tz.normalize(utc_dt.astimezone(sh_tz))
 # 格式化输出上海时区时间
 sh_dt_str = sh_dt.strftime('%Y-%m-%d %H:%M:%S')
 # 将时间保存到 date.json 文件中
