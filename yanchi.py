@@ -92,8 +92,8 @@ for name, versions in response.items():
        }
        converted_data.append(converted_dict)
 
-  # 将转换后的数据写入新的文件
-   with open("yanchilist.json", "w") as file:
-       json.dump(converted_data, file)
-
-print("生成yanchi.json文件成功！")
+# 将转换后的数据写入新的文件
+with open("converted_yanchi.json", "w") as file:
+    json.dump(converted_data, file, indent=4)
+    
+print("生成文件成功！")
