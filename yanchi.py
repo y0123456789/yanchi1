@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import requests
 from datetime import datetime, timezone
+import pytz
 from urllib.parse import urlparse
 import os
 
@@ -11,9 +12,22 @@ url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
 response = requests.get(url).json()
 
 # 提取更新时间保存为date文件
-date = response["_date"]
-with open("date.json", "w") as f:
-    json.dump({"date": date}, f)
+#date = response["_date"]
+# 将时间字符串转换为 datetime 对象
+dt = datetime.fromisoformat(response["_date"])
+# 设置 UTC 时区
+utc_tz = pytz.timezone('UTC')
+# 将 datetime 对象转换为 UTC 时间
+utc_dt = utc_tz.localize(dt)
+# 设置上海时区
+sh_tz = pytz.timezone('Asia/Shanghai')
+# 将 UTC 时间转换为上海时区时间
+sh_dt = utc_dt.astimezone(sh_tz)
+# 格式化输出上海时区时间
+sh_dt_str = sh_dt.strftime('%Y-%m-%d %H:%M:%S')
+# 将时间保存到 date.json 文件中
+with open('date.json', 'w') as f:
+    json.dump({'date': sh_dt_str}, f)
     
 # 删除指定的键值对
 if "iOS (iPhone 14 series)" in response:
