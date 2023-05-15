@@ -73,8 +73,10 @@ for name, versions in response.items():
             version["url"] = url
 
     # 将字典转换回json字符串并保存到文件中
-    with open("yanchi.json", "w") as f:
-        f.write(json.dumps(response))
+    #with open("yanchi.json", "w") as f:
+       # f.write(json.dumps(response))
+    with Path("minified-v3.json").open("w") as f:
+         json.dump(response, f)
 
 
 print("生成yanchi.json文件成功！")
