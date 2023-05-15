@@ -53,19 +53,5 @@ jobs:
         with:
           branch: gh-pages
           folder: .
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
-      # 第六个步骤：上传文件到仓库
-      - name: Upload files to repository
-        uses: actions/upload-artifact@v2
-        with:
-          name: MobileConfig
-          path: ./mobileconfig
-      - name: Upload yanchi.json to repository
-        run: |
-          git config --global user.email "52168408+y0123456789@users.noreply.github.com"
-          git config --global user.name "y0123456789"
-          git checkout -b update-yanchi-json
-          git add yanchi.json
-          git commit -m "Update yanchi.json"
-          git push -u origin update-yanchi-json
+          git-config-name: y0123456789
+          git-config-email: 52168408+y0123456789@users.noreply.github.com
