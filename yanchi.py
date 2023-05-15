@@ -32,7 +32,11 @@ with open('date.json', 'w') as f:
 
     
 # 提取更新时间保存为date文件
-time_str = response.version.get('date')
+for versions in response.values():
+    for version in versions:
+        # 检查版本对象是否为字典类型，并且包含'date'字段
+        if isinstance(version, dict) and version.get('date') is not None:
+time_str = version['date']
 # 将时间字符串转换为 datetime 对象
 dt = datetime.fromisoformat(time_str)
 # 设置 UTC 时区
