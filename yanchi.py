@@ -13,8 +13,7 @@ response = requests.get(url).json()
 
 # 提取更新时间保存为date文件
 #date = response["_date"]
-data = json.load(f)
-    time_str = data["_date"]
+time_str = response["_date"]
 # 将时间字符串转换为 datetime 对象
 dt = datetime.fromisoformat(time_str)
 # 设置 UTC 时区
