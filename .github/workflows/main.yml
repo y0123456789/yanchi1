@@ -47,20 +47,19 @@ jobs:
         run: |
           python3 -u yanchi.py
 
-      # 第五个步骤：使用 JamesIves/github-pages-deploy-action 动作，将生成的文档部署到 gh-pages 分支
+      # 第五个步骤：将生成的文件上传到仓库
+      - name: Upload Files
+        uses: actions/upload-artifact@v2
+        with:
+          name: Generated Files
+          path: |
+            *.mobileconfig
+            deploy/yanchi.json
+      
+      # 第六个步骤：使用 JamesIves/github-pages-deploy-action 动作，将生成的文档部署到 gh-pages 分支
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: .
           token: ${{ secrets.GITHUB_TOKEN }}
-          if-no-branch: create
-
-      # 第六个步骤：上传文件到仓库
-      - name: Upload files to repository
-        uses: actions/upload-artifact@v2
-        with:
-          name: MobileConfig and yanchi.json
-          path: |
-            ./mobileconfig
-            ./yanchi.json
