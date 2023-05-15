@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2
       
       # 第二个步骤：使用 actions/setup-python 动作，配置 Python 环境
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
@@ -54,18 +54,14 @@ jobs:
           branch: gh-pages
           folder: .
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+          clean: true # 添加 clean 参数
+          if-no-branch: create
+
       # 第六个步骤：上传文件到仓库
       - name: Upload files to repository
         uses: actions/upload-artifact@v2
         with:
-          name: MobileConfig
-          path: ./mobileconfig
-      - name: Upload yanchi.json to repository
-        run: |
-          git config --global user.email "52168408+y0123456789@users.noreply.github.com"
-          git config --global user.name "y0123456789"
-          git checkout -b gh-pages
-          git add yanchi.json
-          git commit -m "gh-pages"
-          git push -u origin gh-pages
+          name: MobileConfig and yanchi.json
+          path: |
+            ./mobileconfig
+            ./yanchi.json
