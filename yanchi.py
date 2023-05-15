@@ -84,14 +84,10 @@ for name, versions in response.items():
 
     # 遍历原始数据，将每个类型与对应的数组转换为新的字典格式
     for type, array in original_data.items():
-        converted_dict = {
-        "type": type,
-        "list": array
-       }
-       converted_data.append(converted_dict)
+        converted_data.append({"type": type, "list": array})
 
-# 将转换后的数据写入新的文件
-with open("converted_yanchi.json", "w") as file:
-    json.dump(converted_data, file, indent=4)
+    # 将转换后的数据写入新的文件
+    with open("converted_yanchi.json", "w") as file:
+        json.dump(converted_data, file)
     
 print("生成文件成功！")
