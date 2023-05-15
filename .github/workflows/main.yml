@@ -71,10 +71,9 @@ jobs:
       # 第九个步骤：提交和推送变更到 gh-pages 分支
       - name: Commit and Push Changes
         run: |
-          git checkout gh-pages
+          git checkout -B gh-pages
           git rm -rf .
           cp -R deploy/* .
           git add .
           git commit -m "Update files"
-          git push origin gh-pages
-      
+          git push -f origin gh-pages
