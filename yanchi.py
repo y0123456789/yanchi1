@@ -71,7 +71,7 @@ for name, versions in response.items():
             # 修改字典中的值
             #url = urlparse(template_url)._replace(path=filename).geturl()
             #url = f"https://y0123456789.github.io/yanchi1/{version['name']}剩余{days}天.mobileconfig"      
-            url = f"https://y0123456789.github.io/yanchi1/{version['name']}\u5269\u4f59{days}\u5929.mobileconfig".encode('utf-8').decode('unicode-escape')
+            url = f"https://y0123456789.github.io/yanchi1/{version['name']}\u5269\u4f59{days}\u5929.mobileconfig".encode('utf-8').decode('unicode-escape')"
             version["url"] = url
 
     # 将字典转换回json字符串并保存到文件中
