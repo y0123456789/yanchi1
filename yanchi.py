@@ -78,5 +78,5 @@ for name, versions in response.items():
     with Path("yanchi.json").open("w") as f:
          json.dump(response, f)
 
-json.dump(minified, Path("deploy/yanchi.json").open("w"))
+json.dump(yanchi.json, Path("deploy/yanchi.json").open("w"))
 print("生成yanchi.json文件成功！")
