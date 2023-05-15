@@ -9,6 +9,12 @@ import os
 # 获取json文件
 url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
 response = requests.get(url).json()
+
+# 提取更新时间保存为date文件
+date = response["_date"]
+with open("date.json", "w") as f:
+    json.dump(date, f)
+    
 # 删除指定的键值对
 if "iOS (iPhone 14 series)" in response:
     response.pop("iOS (iPhone 14 series)")
