@@ -13,7 +13,7 @@ response = requests.get(url).json()
 # 提取更新时间保存为date文件
 date = response["_date"]
 with open("date.json", "w") as f:
-    json.dump(date, f)
+    json.dump({"date": date}, f)
     
 # 删除指定的键值对
 if "iOS (iPhone 14 series)" in response:
