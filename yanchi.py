@@ -63,7 +63,7 @@ for name, versions in response.items():
             mobileconfig = mobileconfig.replace("{NAME}", str(version["name"]))
 
             # 保存mobileconfig文件
-            filename = f"./{version['name']} —剩余{days}天.mobileconfig"
+            filename = f"./{version['name']}剩余{days}天.mobileconfig"
             with open(filename, "w") as f:
                 f.write(mobileconfig)
 
