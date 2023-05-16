@@ -68,11 +68,13 @@ jobs:
           git config --global user.name 'y0123456789'
           git config --global user.email '52168408+y0123456789@users.noreply.github.com'
       
-      # 第九个步骤：提交和推送变更到 gh-pages 分支
+# 第九个步骤：提交和推送变更到 gh-pages 分支
       - name: Commit and Push Changes
         run: |
           git checkout -B gh-pages
           git rm -rf .
+          git checkout main -- CNAME
+          cp CNAME .
           cp -R deploy/* .
           git add .
           git commit -m "Update files"
