@@ -74,7 +74,9 @@ jobs:
           git checkout -B gh-pages
           git rm -rf .
           git checkout main -- CNAME
+          if [ ! -f "./CNAME" ]; then
           cp CNAME .
+          fi
           cp -R deploy/* .
           git add .
           git commit -m "Update files"
