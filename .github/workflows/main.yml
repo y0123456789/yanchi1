@@ -1,8 +1,10 @@
 name: 定时任务
 
 on:
+  push:
   schedule:
-    - cron: "0 */4 * * *"
+    - cron: '*/30 * * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   run_code:
