@@ -83,11 +83,11 @@ jobs:
           git push -f origin gh-pages
           
       # 第十个步骤：上传到服务器    
-      - name: Upload Files to Baota Panel
+# 在 build job 的步骤中添加一个上传到宝塔面板的步骤
+      - name: Upload to Baota Panel
         run: |
-          sudo apt-get update && sudo apt-get -y install lftp
-          echo "set ssl:verify-certificate no" > lftp.conf
-          echo "open -u root,wxT7k3iUYmjUuQ7 124.221.182.210" >> lftp.conf
-          echo "set ftp:ssl-allow no" >> lftp.conf
-          echo "mirror -R ./deploy /www/wwwroot/github" >> lftp.conf
-          lftp -c "source lftp.conf"
+           # 使用 curl 命令上传文件到宝塔面板
+           curl -F "file=@deploy/yanchi.json" -H "Authorization: Bearer SuQG6e1TKrsDrhP3nbxrYJVxaTfxXGXS" http://124.221.182.210:8888
+
+        # 上传其他文件（例如.mobileconfig文件）
+        # curl -F "file=@deploy/yourfile.mobileconfig" -H "Authorization: Bearer YOUR_API_KEY" https://YOUR_BAOTA_PANEL_URL/api/upload
