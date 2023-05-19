@@ -83,11 +83,12 @@ jobs:
           git push -f origin gh-pages
           
       # 第十个步骤：上传到服务器    
-# 在 build job 的步骤中添加一个上传到宝塔面板的步骤
-      - name: Upload to Baota Panel
-        run: |
-           # 使用 curl 命令上传文件到宝塔面板
-           curl -F "file=@deploy/yanchi.json" -H "Authorization: Bearer SuQG6e1TKrsDrhP3nbxrYJVxaTfxXGXS" http://124.221.182.210
+      - name: Upload files to server
+        uses: appleboy/scp-action@master
+        with:
+           host: ${{ secrets.SERVER_HOST }}  # 宝塔Linux面板服务器的IP地址
+           username: ${{ secrets.SERVER_USERNAME }}  # 宝塔Linux面板服务器的用户名
+           password: ${{ secrets.SERVER_PASSWORD }}  # 宝塔Linux面板服务器的密码
+           source: "deploy/*"  # 生成的文件路径
+           target: "/www/wwwroot/github"  # 宝塔Linux面板上的目标路径
 
-        # 上传其他文件（例如.mobileconfig文件）
-        # curl -F "file=@deploy/yourfile.mobileconfig" -H "Authorization: Bearer YOUR_API_KEY" https://YOUR_BAOTA_PANEL_URL/api/upload
