@@ -87,7 +87,7 @@ jobs:
       - name: Upload to Baota Panel
         run: |
            # 使用 curl 命令上传文件到宝塔面板
-           curl -F "file=@deploy/yanchi.json" -H "Authorization: Bearer SuQG6e1TKrsDrhP3nbxrYJVxaTfxXGXS" http://124.221.182.210:8888/api/upload
+           curl -F "file=@deploy/yanchi.json" -H "Authorization: Bearer SuQG6e1TKrsDrhP3nbxrYJVxaTfxXGXS" http://124.221.182.210:36677
 
         # 上传其他文件（例如.mobileconfig文件）
         # curl -F "file=@deploy/yourfile.mobileconfig" -H "Authorization: Bearer YOUR_API_KEY" https://YOUR_BAOTA_PANEL_URL/api/upload
