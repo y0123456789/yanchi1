@@ -68,7 +68,7 @@ jobs:
           git push -f origin gh-pages
       
       - name: Upload Files to Server
-        uses: SamKirkland/FTP-Deploy-Action@4.1.1
+        uses: SamKirkland/FTP-Deploy-Action@5.0.0
         with:
           server: 124.221.182.210
           username: 15079770750
