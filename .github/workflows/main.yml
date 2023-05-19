@@ -77,9 +77,9 @@ jobs:
           # 将生成的文件上传到宝塔Linux面板的公共文件夹
           # 替换以下字段为实际的值：
           # - "username": 服务器用户名
-          # - "your_server_ip": 服务器IP地址
-          # - "/path/to/panel/public/": 宝塔Linux面板的公共文件夹路径
-          scp -r deploy/* username@your_server_ip:/path/to/panel/public/
+          # - "124.221.182.210": 服务器IP地址
+          # - "/www/wwwroot/github": 宝塔Linux面板的公共文件夹路径
+          scp -r deploy/* root@124.221.182.210:/www/wwwroot/github
       
       # 第十个步骤：提交和推送变更到 gh-pages 分支
       - name: Commit and Push Changes
