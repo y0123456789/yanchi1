@@ -56,6 +56,8 @@ jobs:
       - name: Move Files to Deploy Folder
         run: |
           mv yanchi.json deploy/yanchi.json
+          mv yanchilist.json deploy/yanchilist.json
+          mv date.json deploy/date.json
           mv *.mobileconfig deploy/
       
       # 第七个步骤：将生成的文件复制回工作目录
