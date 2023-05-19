@@ -94,4 +94,15 @@ jobs:
 
          # 使用 scp 命令上传文件到服务器
          scp -r $FILE_PATH $USERNAME@$SERVER_ADDRESS:$REMOTE_DIR
+         
+      - name: Upload files via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: 124.221.182.210
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /www/wwwroot
+            scp -r deploy/* .
 
