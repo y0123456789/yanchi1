@@ -48,7 +48,7 @@ jobs:
         run: |
           python3 -u yanchi.py
           
-       # 第五个步骤：创建 deploy 文件夹
+      # 第五个步骤：创建 deploy 文件夹
       - name: Create Deploy Folder
         run: mkdir -p deploy
       
@@ -68,17 +68,29 @@ jobs:
           git config --global user.name 'y0123456789'
           git config --global user.email '52168408+y0123456789@users.noreply.github.com'
       
-# 第九个步骤：提交和推送变更到 gh-pages 分支
+      # 第九个步骤：将生成的文件上传到宝塔Linux面板
+      - name: Install scp
+        run: sudo apt-get install -y openssh-client
+      
+      - name: Upload Files to Baota Panel
+        run: |
+          # 将生成的文件上传到宝塔Linux面板的公共文件夹
+          # 替换以下字段为实际的值：
+          # - "username": 服务器用户名
+          # - "your_server_ip": 服务器IP地址
+          # - "/path/to/panel/public/": 宝塔Linux面板的公共文件夹路径
+          scp -r deploy/* username@your_server_ip:/path/to/panel/public/
+      
+      # 第十个步骤：提交和推送变更到 gh-pages 分支
       - name: Commit and Push Changes
         run: |
           git checkout -B gh-pages
           git rm -rf .
           git checkout main -- CNAME
           if [ ! -f "./CNAME" ]; then
-          cp CNAME .
+            cp CNAME .
           fi
           cp -R deploy/* .
           git add .
           git commit -m "Update files"
           git push -f origin gh-pages
-
