@@ -87,7 +87,7 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get -y install lftp
           echo "set ssl:verify-certificate no" > lftp.conf
-          echo "open -u 15079770750,rrXztM27bAXncJNy ftp://124.221.182.210:21" >> lftp.conf
+          echo "open -u root,wxT7k3iUYmjUuQ7 124.221.182.210" >> lftp.conf
           echo "set ftp:ssl-allow no" >> lftp.conf
           echo "mirror -R ./deploy /www/wwwroot/github" >> lftp.conf
           lftp -c "source lftp.conf"
