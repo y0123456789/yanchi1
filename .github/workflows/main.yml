@@ -88,8 +88,7 @@ jobs:
         with:
           host: 124.221.182.210
           username: root
-          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKqyvO0H6KKOuslUNlngardT2lws1QtaG8T2vKWZOWj3qXJmn5AcSRYI9iVt4oRa+oKIUoBOX0Zg79fjImt7SuH+6SnxAcmFRUTOLuFaeWl+2xrdVkc7qv14aZeeMB1hrpB7oT8Z4SuLBo32SG3MiujDAT61vk7odoCoEFnqR+XK2VR45OxWHkWiMf1nFH+K/6QuGe87rtUGCKmvYfdpT48JSbSxnzTN4dJss6CxRBJwU6E3TIc7GhEdwpYvc8X2GUUHlBJmYm0rawNw3xCSrPVF9Joej/aI/oibzzcMWVBBonZffq+0Zc6D+bqUHdAHoe2/3IG0bgL9yEsMT8gMkBHsxnKboIH5x16bui2cbDWCst0OAMYSeguPqhblaOo0vHtid8+FAW9gyg1jSD1i2aXWf7avyAHQ3V6xycJ5R9Bf2KcF0dj23hud7jLwm6liYB5BZEIgdo6ryDIQ/JRXGw4Y9dJhrj53YfMA1K/YXCI/vqMdK24i1cQgZ1PFoG4EZQgQykHtTPJJEZURLCECih8kKUhIqZ2dDFjlk2jFM5Jjr6PBbbSN2tsvbVzLz/hlBJAA6s8NC/kZxj+0DZw6y2jBYmFeXMp/slSjaJIyDUUvHQSQnC8UvJV6Z0DrIyaPJMHtWuEKtMvF2Wx3pKIYiHgQwEtl1fqfgEnVxnzWelwQ== 1390610341@qq.com
-          port: 22
+          key: lhkp-5560qb3a
           script: |
             cd /www/wwwroot
             scp -r deploy/* .
