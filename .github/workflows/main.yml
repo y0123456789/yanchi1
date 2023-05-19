@@ -82,16 +82,14 @@ jobs:
           git commit -m "Update files"
           git push -f origin gh-pages
     # 在 GitHub Action 的工作流程中添加一个步骤，用于上传文件到服务器
-
-         
-      - name: Upload files via SSH
+      # 第十个步骤：上传文件到远程服务器
+      - name: Upload files to remote server
         uses: appleboy/ssh-action@master
         with:
           host: 124.221.182.210
           username: root
-          key: ${{secrets.SSH_PRIVATE_KE}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
             cd /www/wwwroot
             scp -r deploy/* .
-
