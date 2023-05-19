@@ -89,7 +89,7 @@ jobs:
         with:
           host: 124.221.182.210
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{secrets.SSH_PRIVATE_KE}}
           port: 22
           script: |
             cd /www/wwwroot
