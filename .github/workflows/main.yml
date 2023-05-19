@@ -82,18 +82,7 @@ jobs:
           git commit -m "Update files"
           git push -f origin gh-pages
     # 在 GitHub Action 的工作流程中添加一个步骤，用于上传文件到服务器
-      - name: 上传文件到服务器
-        run: |
-         # 设置服务器地址、用户名和目标目录
-          SERVER_ADDRESS="124.221.182.210"
-          USERNAME="root"
-          REMOTE_DIR="/www"
-    
-         # 生成的文件路径
-         FILE_PATH="path_to_generated_file"
 
-         # 使用 scp 命令上传文件到服务器
-         scp -r $FILE_PATH $USERNAME@$SERVER_ADDRESS:$REMOTE_DIR
          
       - name: Upload files via SSH
         uses: appleboy/ssh-action@master
