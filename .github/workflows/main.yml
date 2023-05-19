@@ -88,7 +88,7 @@ jobs:
         with:
           host: 124.221.182.210
           username: root
-          key: lhkp-5560qb3a
+          key: ${{ secrets.lhkp-5560qb3a }}
           script: |
             cd /www/wwwroot
             scp -r deploy/* .
