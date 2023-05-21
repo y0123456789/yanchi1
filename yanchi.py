@@ -83,7 +83,7 @@ for name, versions in response.items():
 
         # 修改mobileconfig文件
         if "delay" in version and version["delay"] >= 0:
-            mobileconfig = template.replace("{DELAYPERIOD}", str(version["delay"])).replace("{days}",str(["days"]))
+            mobileconfig = template.replace("{DELAYPERIOD}", str(version["delay"])).replace("{days}",str("days"))
             mobileconfig = mobileconfig.replace("{NAME}", str(version["name"]))
 
             # 保存mobileconfig文件
