@@ -96,7 +96,7 @@ for name, versions in response.items():
             # 修改字典中的值
             #url = urlparse(template_url)._replace(path=filename).geturl()
             #url = f"https://y0123456789.github.io/yanchi1/{version['name']}剩余{days}天.mobileconfig"      
-            url = f"https://y0123456789.github.io/yanchi1/{version['name']}.mobileconfig"
+            url = f"https://yanchi.lanrenwanji.top/{version['name']}.mobileconfig"
             version["url"] = url
             
      # 提取更新时间保存为date文件
