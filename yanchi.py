@@ -63,7 +63,7 @@ for name, versions in list(response.items()):
     if not versions:
         del response[name]
 # 获取mobileconfig模板文件
-template_url = "https://raw.githubusercontent.com/y0123456789/yanchi/main/template.mobileconfig"
+template_url = "https://raw.githubusercontent.com/y0123456789/yanchi1/main/template.mobileconfig"
 template = requests.get(template_url).text
 
 # 循环修改模板文件并保存mobileconfig文件
