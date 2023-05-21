@@ -238,9 +238,9 @@
 		</dict>
 	</array>
 	<key>PayloadDescription</key>
-	<string>{NAME}-dy懒人玩机</string>
+	<string>{NAME}剩余{days}天-dy懒人玩机</string>
 	<key>PayloadDisplayName</key>
-	<string>OTA Delay - {DELAYPERIOD} Days</string>
+	<string>{NAME}-dy懒人玩机</string>
 	<key>PayloadIdentifier</key>
 	<string>DhinakGOTADelay</string>
 	<key>PayloadOrganization</key>
