@@ -1,0 +1,106 @@
+import requests
+import json
+from datetime import datetime
+
+url = "https://www.betahub.cn/api/posts"
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    cards = data["data"]
+
+    nclist = []
+    zsblist = []
+
+    for card in cards:
+        if card["content"] != "":
+            created_at = card["created_at"].split("+")[0]  # 去除时区信息
+            created_date = datetime.strptime(created_at, "%Y-%m-%dT%H:%M:%S.%f")  # 转换为datetime对象
+            formatted_date = created_date.strftime("%Y-%m-%d")  # 格式化为年月日
+            filtered_data = {
+                "id": None,
+                "name": None,
+                "build": None,
+                "created_at": formatted_date,
+            }
+
+            if "iOS" in card["content"]:
+                filtered_data["id"] = 1
+            elif "iPadOS" in card["content"]:
+                filtered_data["id"] = 2
+            elif "macOS" in card["content"]:
+                filtered_data["id"] = 3
+            elif "watchOS" in card["content"]:
+                filtered_data["id"] = 4
+            elif "tvOS" in card["content"]:
+                filtered_data["id"] = 5
+
+            if filtered_data["id"] is not None:  # 添加判断，仅处理ID不为空的数据
+                if "beta" in card["content"].lower() or "rc" in card["content"].lower():
+                    content_parts = card["content"].split("**")
+                    if len(content_parts) > 1:
+                        name = content_parts[1].split("(")[0].strip()
+                        if name:
+                            filtered_data["name"] = name
+                    if "(" in card["content"] and ")" in card["content"]:
+                        build_parts = card["content"].split("(")
+                        filtered_data["build"] = "(" + build_parts[1].split(")")[0].strip() + ")"
+                    nclist.append(filtered_data)
+                else:
+                    content_parts = card["content"].split("**")
+                    if len(content_parts) > 1:
+                        name = content_parts[1].split("(")[0].strip()
+                        if name:
+                            filtered_data["name"] = name
+                    if "(" in card["content"] and ")" in card["content"]:
+                        build_parts = card["content"].split("(")
+                        filtered_data["build"] = "(" + build_parts[1].split(")")[0].strip() + ")"
+                    zsblist.append(filtered_data)
+
+    nclist_sorted = sorted(nclist, key=lambda x: x["id"] if x["id"] is not None else float("inf"))
+    zsblist_sorted = sorted(zsblist, key=lambda x: x["id"] if x["id"] is not None else float("inf"))
+
+    # 删除"name": null的数据
+    nclist_filtered = [data for data in nclist_sorted if data["name"] is not None]
+    zsblist_filtered = [data for data in zsblist_sorted if data["name"] is not None]
+
+    # 比较并删除相同ID的数据中build值较小的部分
+    nclist_updated = []
+    zsblist_updated = []
+
+    for data in nclist_filtered:
+        existing_data = next((item for item in nclist_updated if item["id"] == data["id"]), None)
+        if existing_data:
+            existing_build = existing_data["build"]
+            new_build = data["build"]
+            if existing_build and new_build and new_build > existing_build:
+                existing_data["build"] = new_build
+        else:
+            nclist_updated.append(data)
+
+    for data in zsblist_filtered:
+        existing_data = next((item for item in zsblist_updated if item["id"] == data["id"]), None)
+        if existing_data:
+            existing_build = existing_data["build"]
+            new_build = data["build"]
+            if existing_build and new_build and new_build > existing_build:
+                existing_data["build"] = new_build
+        else:
+            zsblist_updated.append(data)
+
+    with open("nc.json", "w") as file:
+        json.dump(nclist_updated, file)
+
+    with open("zsb.json", "w") as file:
+        json.dump(zsblist_updated, file)
+
+    # 打印输出文件内容
+    with open("nc.json", "r") as file:
+        nc_content = file.read()
+        print("nc.json 内容:")
+        print(nc_content)
+
+    with open("zsb.json", "r") as file:
+        zsb_content = file.read()
+        print("zsb.json 内容:")
+        print(zsb_content)
