@@ -4,9 +4,9 @@ name: Build HTML Docs
 # 指定 GitHub Actions 触发的事件，包括 push 事件，定时执行 cron 事件，手动触发 workflow_dispatch 事件
 on:
   push:
-  schedule:
-    - cron: '*/30 * * * *'
-    - cron: '0 0 * * *'
+  #schedule:
+    #- cron: '*/30 * * * *'
+    #- cron: '0 0 * * *'
   workflow_dispatch:
 
 # 定义访问权限，这里表示需要访问仓库的 contents 和 deployments 权限
