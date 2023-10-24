@@ -6,13 +6,12 @@ import pytz
 from urllib.parse import urlparse
 import os
 
-
 # 获取json文件
 url = "https://y0123456789.github.io/check-pallas/minified-v3.json"
 response = requests.get(url).json()
 
 # 提取更新时间保存为date文件
-#date = response["_date"]
+# date = response["_date"]
 time_str = response["_date"]
 # 将时间字符串转换为 datetime 对象
 dt = datetime.fromisoformat(time_str)
@@ -30,24 +29,27 @@ sh_dt_str = sh_dt.strftime('%Y-%m-%d %H:%M:%S')
 with open('date.json', 'w') as f:
     json.dump({'date': sh_dt_str}, f)
 
-    
-
-    
 # 删除指定的键值对
-if "iOS (iPhone 14 series)" in response:
-    response.pop("iOS (iPhone 14 series)")
-if "iPadOS (October 2022 models)" in response:
-    response.pop("iPadOS (October 2022 models)")
 if "_date" in response:
     response.pop("_date")
-if "iOS (all other devices supporting iOS 16)" in response:
-    response["iOS (iPhone 8 - iPhone 14)"] = response.pop("iOS (all other devices supporting iOS 16)")
+if "September 2023 iPhones" in response:
+    response["iOS (iPhone 15系列)"] = response.pop("September 2023 iPhones")
+if "iOS (devices supporting iOS 17)" in response:
+    response["iOS (iPhone XR - iPhone 14)"] = response.pop("iOS (devices supporting iOS 17)")
+if "iOS Legacy v3 (devices supporting up to iOS 16)" in response:
+    response["iOS (iPhone 8 - iPhone X)"] = response.pop("iOS Legacy v3 (devices supporting up to iOS 16)")
 if "iOS Legacy v2 (device supporting up to iOS 15)" in response:
     response["iOS (iPhone 6s - iPhone 7)"] = response.pop("iOS Legacy v2 (device supporting up to iOS 15)")
-if "iPadOS" in response:
-    response["iPadOS (最高iPadOS 16)"] = response.pop("iPadOS")
-if "iPadOS Legacy v2 (devices supporting up to iOS 15)" in response:
-    response["iPadOS (最高iPadOS 15)"] = response.pop("iPadOS Legacy v2 (devices supporting up to iOS 15)")
+if "iOS Legacy (device supporting up to iOS 12)" in response:
+    response["iOS (iPhone 6以下"] = response.pop("iOS Legacy (device supporting up to iOS 12)")
+if "iPadOS (devices supporting iPadOS 17)" in response:
+    response["iPadOS (最高iPadOS 17)"] = response.pop("iPadOS (devices supporting iPadOS 17)")
+if "iPadOS Legacy v3 (devices supporting up to iPadOS 16)" in response:
+    response["iPadOS (最高iPadOS 16)"] = response.pop("iPadOS Legacy v3 (devices supporting up to iPadOS 16)")
+if "iPadOS Legacy v2 (devices supporting up to iPadOS 15)" in response:
+    response["iPadOS (最高iPadOS 15)"] = response.pop("iPadOS Legacy v2 (devices supporting up to iPadOS 15)")
+if "iPadOS Legacy (devices supporting up to iOS 12)" in response:
+    response["iPadOS (最高iPadOS 12)"] = response.pop("iPadOS Legacy (devices supporting up to iOS 12)")
 if "macOS" in response:
     response["macOS"] = response.pop("macOS")
 if "tvOS" in response:
@@ -71,7 +73,8 @@ template = requests.get(template_url).text
 for name, versions in response.items():
     print(f"{name}:")
     for version in versions:
-        if isinstance(version, dict) and version.get('date') is not None and version.get('delay') is not None and version.get('delay') >= 0:
+        if isinstance(version, dict) and version.get('date') is not None and version.get(
+                'delay') is not None and version.get('delay') >= 0:
             delta = datetime.now(timezone.utc) - datetime.fromisoformat(version["date"].replace("Z", "+00:00"))
             day = datetime.fromisoformat(version["date"].replace("Z", "+00:00")) - datetime.now(timezone.utc)
             days = day.days
@@ -80,26 +83,25 @@ for name, versions in response.items():
         else:
             days = 0
 
-
         # 修改mobileconfig文件
         if "delay" in version and version["delay"] >= 0:
-            mobileconfig = template.replace("{DELAYPERIOD}", str(version["delay"])).replace("{days}",str(days))
+            mobileconfig = template.replace("{DELAYPERIOD}", str(version["delay"])).replace("{days}", str(days))
             mobileconfig = mobileconfig.replace("{NAME}", str(version["name"]))
 
             # 保存mobileconfig文件
-            #filename = f"./{version['name']}剩余{days}天.mobileconfig"
+            # filename = f"./{version['name']}剩余{days}天.mobileconfig"
             filename = f"./{version['name']}.mobileconfig"
             with open(filename, "w") as f:
                 f.write(mobileconfig)
 
             # 将json字符串解析成字典
             # 修改字典中的值
-            #url = urlparse(template_url)._replace(path=filename).geturl()
-            #url = f"https://y0123456789.github.io/yanchi1/{version['name']}剩余{days}天.mobileconfig"      
+            # url = urlparse(template_url)._replace(path=filename).geturl()
+            # url = f"https://y0123456789.github.io/yanchi1/{version['name']}剩余{days}天.mobileconfig"
             url = f"https://yanchi.lanrenwanji.top/{version['name']}.mobileconfig"
             version["url"] = url
-            
-     # 提取更新时间保存为date文件
+
+    # 提取更新时间保存为date文件
 for versions in response.values():
     for version in versions:
         # 检查版本对象是否为字典类型，并且包含'date'字段
@@ -124,14 +126,14 @@ for versions in response.values():
 
     # 将字典转换回json字符串并保存到文件中
     with open("yanchi.json", "w") as f:
-       f.write(json.dumps(response))
-    #with Path("yanchi.json").open("w") as f:
-         #json.dump(response, f)
-        
+        f.write(json.dumps(response))
+    # with Path("yanchi.json").open("w") as f:
+    # json.dump(response, f)
+
     # 读取原始数据
     with open("yanchi.json", "r") as file:
-       original_data = json.load(file)
-    
+        original_data = json.load(file)
+
     converted_data = []
 
     # 遍历原始数据，将每个类型与对应的数组转换为新的字典格式
@@ -141,5 +143,5 @@ for versions in response.values():
     # 将转换后的数据写入新的文件
     with open("yanchilist.json", "w") as file:
         json.dump(converted_data, file)
-    
+
 print("生成文件成功！")
