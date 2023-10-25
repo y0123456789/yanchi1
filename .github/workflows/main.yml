@@ -47,7 +47,7 @@ jobs:
       - name: Run yanchi.py
         run: |
           python3 -u yanchi.py
-          python3 -u ipsw.py
+          # python3 -u ipsw.py
           
        # 第五个步骤：创建 deploy 文件夹
       - name: Create Deploy Folder
